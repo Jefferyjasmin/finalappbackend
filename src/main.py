@@ -40,8 +40,8 @@ def handle_get():
 @app.route('/user/<int:id>', methods=['GET'])
 def handle_user(id):
     user = User.query.filter_by(id=id)
-    user = list(map(lambda x: x.serialize(), user))
-    return jsonify(user), 200
+    # user = list(map(lambda x: x.serialize(), user))
+    return jsonify(user.serialize()), 200
 
 
 
@@ -65,10 +65,10 @@ def handle_post():
     user = User(email=body['email'],income=body['income'],user_name=body['userName'] , is_active=body['is_active'])
     db.session.add(user)
     db.session.commit()
-    user = User.query.filter_by(user_name=body['userName'])
+    user = User.query.filter_by(user_name=body['userName']).first()
      
-    user = list(map(lambda x: x.serialize(), user))
-    return jsonify(user),200
+    # user = list(map(lambda x: x.serialize(), user))
+    return jsonify(user.serialize()),200
 
 
 
